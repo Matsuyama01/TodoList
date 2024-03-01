@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './main.css';
 
 const App: React.FC = () => {
   //入力欄のリストを保存するための状態
@@ -22,8 +23,8 @@ const App: React.FC = () => {
   return (
     <div className='App'>
       <div>
-        <h2>Todoリスト</h2>
-        <form onSubmit={handleSubmit}>
+        <h2 className='title'>Todoリスト</h2>
+        <form onSubmit={handleSubmit} className='form'>
           <input
             type='text'
             onChange={handleChange}
@@ -32,13 +33,13 @@ const App: React.FC = () => {
           />
           <input type='submit' value='追加' className='buttun' />
         </form>
-
+        <h3 className='listTitle'>今日やること</h3>
         <ul>
-          リスト
           {list.map((item, index) => (
             <li key={index} className='list'>
               {item}
-            </li> // リストの各項目を表示
+              {/* リストの各項目を表示 */}
+            </li>
           ))}
         </ul>
       </div>
