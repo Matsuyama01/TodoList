@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 import './main.css';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const App: React.FC = () => {
   //入力欄のリストを保存するための状態
@@ -20,28 +28,68 @@ const App: React.FC = () => {
     setInputValue(''); // 入力欄をクリア
   };
 
+  // リストからアイテムを削除する関数
+  const handleDelete = (indexToRemove: number) => {
+    setList((currentList) =>
+      currentList.filter((_, index) => index !== indexToRemove)
+    );
+  };
+
   return (
     <div className='App'>
       <div>
         <h2 className='title'>Todoリスト</h2>
         <form onSubmit={handleSubmit} className='form'>
-          <input
-            type='text'
+          {/* MUIのテキスト欄を使用 */}
+          <TextField
+            id='outlined-basic'
+            label='リストを追加してください'
+            variant='outlined'
+            size='small'
             onChange={handleChange}
             value={inputValue}
-            className='inputtext'
           />
-          <input type='submit' value='追加' className='buttun' />
+          <Button
+            type='submit'
+            variant='contained'
+            color='primary'
+            className='button'
+          >
+            追加
+          </Button>
         </form>
         <h3 className='listTitle'>今日やること</h3>
-        <ul>
+
+        {/* ここにテキスト欄からのリストを受け取る */}
+        <List
+          sx={{
+            width: '100%',
+            bgcolor: 'lightblue',
+            borderRadius: '16px',
+            overflow: 'hidden',
+          }}
+        >
+          {/* テキスト欄を表示 */}
           {list.map((item, index) => (
-            <li key={index} className='list'>
-              {item}
-              {/* リストの各項目を表示 */}
-            </li>
+            <React.Fragment key={index}>
+              {/* 削除機能 */}
+              <ListItem
+                secondaryAction={
+                  <IconButton
+                    edge='end'
+                    aria-label='delete'
+                    onClick={() => handleDelete(index)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                }
+              >
+                <ListItemText primary={item} />
+              </ListItem>
+              {index < list.length - 1 && <Divider />}
+            </React.Fragment>
           ))}
-        </ul>
+        </List>
       </div>
     </div>
   );
