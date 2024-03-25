@@ -1,10 +1,11 @@
 import { signInWithPopup } from 'firebase/auth';
-import { auth, provider } from './firebase';
+import { auth, provider } from '../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import TodoList from './components/TodoList';
+import { Link } from 'react-router-dom';
+import TodoList from '../components/TodoList';
 import React from 'react';
 
-const Home: React.FC = () => {
+const TodoListPage: React.FC = () => {
   const [user] = useAuthState(auth);
 
   // Googleでサインイン
@@ -49,8 +50,9 @@ const Home: React.FC = () => {
       ) : (
         <SignInButton />
       )}
+      <Link to='/'>ホームに戻る</Link>
     </div>
   );
 };
 
-export default Home;
+export default TodoListPage;
